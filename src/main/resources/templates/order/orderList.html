@@ -36,7 +36,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${orders}">
+            <th:block th:each="item, i : ${orders}">
+                <th:block th:each="orderItem, j : ${item.orderItems}">
+                    <tr>
+                        <td th:text="*{orders[__${i.index}__].id}"></td>
+                        <td th:text="*{orders[__${i.index}__].member.name}"></td>
+                        <td th:text="*{orders[__${i.index}__].orderItems[__${j.index}__].item.name}"></td>
+                        <td th:text="*{orders[__${i.index}__].orderItems[__${j.index}__].orderPrice}"></td>
+                        <td th:text="*{orders[__${i.index}__].orderItems[__${j.index}__].count}"></td>
+                        <td th:text="*{orders[__${i.index}__].status}"></td>
+                        <td th:text="*{orders[__${i.index}__].orderDate}"></td>
+                        <td>
+                            <a th:if="*{orders[__${i.index}__].status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${item.id}+')'"
+                               class="btn btn-danger">CANCEL</a>
+                        </td>
+                    </tr>
+                </th:block>
+            </th:block>
+            <!--<tr th:each="item : ${orders}">
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.member.name}"></td>
                 <td th:text="${item.orderItems[0].item.name}"></td>
@@ -48,7 +65,7 @@
                     <a th:if="${item.status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${item.id}+')'"
                        class="btn btn-danger">CANCEL</a>
                 </td>
-            </tr>
+            </tr>-->
             </tbody>
         </table>
     </div>
